@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTM Italia - Arma Reforger Recruitment</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --mil-dark: #070905;
+            --mil-panel: rgba(15, 20, 15, 0.65);
+            --mil-green: #4b5320;
+            --neon-accent: #a3cc29;
+            --neon-glow: rgba(163, 204, 41, 0.3);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-light: rgba(163, 204, 41, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            padding: 20px;
+            
+            /* Sfondo: Gradiente scuro + Griglia Tattica */
+            background-color: var(--mil-dark);
+            background-image: 
+                linear-gradient(rgba(7, 9, 5, 0.9), rgba(7, 9, 5, 0.9)),
+                linear-gradient(var(--border-light) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-position: center center;
+        }
+
+        .recruitment-container {
+            background-color: var(--mil-panel);
+            border: 1px solid var(--border-light);
+            border-top: 4px solid var(--neon-accent);
+            padding: 45px 40px;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px var(--neon-glow);
+            max-width: 700px;
+            width: 100%;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Effetto Scanline decorativo */
+        .recruitment-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 3em;
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .header h2 {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 5px 0 15px;
+            text-transform: uppercase;
+            color: var(--neon-accent);
+            font-size: 1.4em;
+            letter-spacing: 3px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: rgba(0,0,0,0.5);
+            border-left: 3px solid var(--neon-accent);
+            padding: 15px 20px;
+            font-size: 0.95em;
+            color: var(--text-main);
+            line-height: 1.6;
+            text-align: left;
+            border-radius: 0 8px 8px 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .info-box span i {
+            color: var(--neon-accent);
+            width: 25px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        form {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: 0.3s ease;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            padding-left: 14px; /* Rimuove lo spazio per l'icona nella textarea */
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--neon-accent);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        input:focus + i, select:focus + i {
+            color: var(--neon-accent);
+        }
+
+        /* Stile specifico per le select per nascondere l'icona interna al padding su alcuni browser */
+        select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .select-wrapper::after {
+            content: '\f0d7'; /* Freccia in giù FontAwesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 15px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: var(--mil-green);
+            color: #fff;
+            border: 1px solid var(--neon-accent);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s ease;
+        }
+
+        button:hover {
+            background: #5c6628;
+            box-shadow: 0 0 20px var(--neon-glow);
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        button:hover::before {
+            left: 150%;
+        }
+
+        @media (max-width: 650px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .recruitment-container {
+                padding: 30px 20px;
+            }
+            .header h1 { font-size: 2.2em; }
+            .header h2 { font-size: 1.1em; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="recruitment-container">
+
+    <div class="header">
+        <h1>OTM ITALIA</h1>
+        <h2>Arma Reforger Tactical Unit</h2>
+        <p>Terminale ufficiale di arruolamento. Inserisci i tuoi dati operativi.</p>
+
+        <div class="info-box">
+            <span><i class="fa-solid fa-calendar-check"></i> Attivi 4–5 giorni a settimana (Missioni & Eventi)</span>
+            <span><i class="fa-solid fa-users-gear"></i> Staff competente e struttura di comando solida</span>
+            <span><i class="fa-solid fa-crosshairs"></i> Gameplay Milsim serio, tattico e realistico</span>
+            <span><i class="fa-solid fa-handshake"></i> Community coesa e in forte espansione</span>
+        </div>
+    </div>
+
+    <form action="https://formsubmit.co/otm.armaitalia@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="Nuovo Arruolamento OTM Italia - Arma Reforger">
+        <input type="hidden" name="_template" value="table">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Nome Reale / Nominativo</label>
+                <div class="input-wrapper">
+                    <input name="Nome Reale" type="text" placeholder="Es. Mario Rossi" required>
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Età (Min 16)</label>
+                <div class="input-wrapper">
+                    <input name="Età" type="number" min="16" placeholder="Es. 22" required>
+                    <i class="fa-solid fa-cake-candles"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Indirizzo Email</label>
+                <div class="input-wrapper">
+                    <input name="Email" type="email" placeholder="operatore@email.com" required>
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>ID Discord</label>
+                <div class="input-wrapper">
+                    <input name="Discord" type="text" placeholder="utente#1234 o @utente" required>
+                    <i class="fa-brands fa-discord"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Nickname in Game (Arma)</label>
+                <div class="input-wrapper">
+                    <input name="Nickname" type="text" placeholder="Nome Operatore" required>
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Esperienza MilSim</label>
+                <div class="input-wrapper select-wrapper">
+                    <select name="Esperienza" required>
+                        <option value="" disabled selected>Seleziona livello...</option>
+                        <option value="Nessuna">Recluta (Nessuna)</option>
+                        <option value="Base">Base (Meno di 100 ore)</option>
+                        <option value="Intermedia">Intermedia (100 - 500 ore)</option>
+                        <option value="Avanzata">Veterano (500+ ore)</option>
+                    </select>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Specializzazione Preferita</label>
+            <div class="input-wrapper select-wrapper">
+                <select name="Ruolo" required>
+                    <option value="" disabled selected>Assegnazione desiderata...</option>
+                    <option value="Fanteria">Fanteria Leggera / Pesante</option>
+                    <option value="Medico">Medico di Combattimento</option>
+                    <option value="Mitragliere">Mitragliere (LMG/HMG)</option>
+                    <option value="Carrista">Equipaggio Corazzati</option>
+                    <option value="Pilota">Pilota (Ala Fissa / Rotante)</option>
+                    <option value="Cecchino">Tiratore Scelto / Sniper</option>
+                </select>
+                <i class="fa-solid fa-medal"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Note aggiuntive / Background</label>
+            <textarea name="Note" placeholder="Eventuali esperienze in altri clan, disponibilità orarie particolari, ecc..."></textarea>
+        </div>
+
+        <button type="submit">Trasmetti Modulo <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i></button>
+    </form>
+
+</div>
+
+</body>
+</html>
