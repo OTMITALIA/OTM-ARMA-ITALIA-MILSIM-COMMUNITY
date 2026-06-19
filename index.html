@@ -49,7 +49,7 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            z-index: -2; /* Messo dietro a tutto */
+            z-index: -2;
         }
 
         /* --- OVERLAY CON GRIGLIA TATTICA --- */
@@ -59,9 +59,9 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1; /* Sopra il video, sotto il form */
+            z-index: -1;
             background-image: 
-                linear-gradient(rgba(7, 9, 5, 0.6), rgba(7, 9, 5, 0.8)), /* Scurisce il video */
+                linear-gradient(rgba(7, 9, 5, 0.6), rgba(7, 9, 5, 0.8)), 
                 linear-gradient(var(--border-light) 1px, transparent 1px),
                 linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
@@ -82,9 +82,9 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            min-height: 500px; /* Evita salti di altezza troppo bruschi */
         }
 
-        /* Effetto Scanline decorativo */
         .recruitment-container::before {
             content: "";
             position: absolute;
@@ -96,11 +96,26 @@
             opacity: 0.4;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
+        /* --- LOGICA DELLE "PAGINE" --- */
+        .view-section {
+            display: none; /* Nascosto di default */
+            animation: fadeIn 0.4s ease-out forwards;
             position: relative;
             z-index: 1;
+        }
+
+        .view-section.active {
+            display: block; /* Mostra solo la sezione attiva */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .header h1 {
@@ -128,6 +143,22 @@
             margin-bottom: 20px;
         }
 
+        /* --- STILI PER LA SCHERMATA INFO --- */
+        .briefing-content {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .briefing-content p {
+            color: var(--text-main);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
         .info-box {
             background: rgba(0,0,0,0.5);
             border-left: 3px solid var(--neon-accent);
@@ -138,21 +169,24 @@
             text-align: left;
             border-radius: 0 8px 8px 0;
             display: grid;
-            gap: 8px;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .info-box span {
+            display: flex;
+            align-items: center;
         }
 
         .info-box span i {
             color: var(--neon-accent);
-            width: 25px;
+            width: 30px;
+            font-size: 1.2em;
             text-align: center;
             margin-right: 10px;
         }
 
-        form {
-            position: relative;
-            z-index: 1;
-        }
-
+        /* --- STILI FORM E INPUT --- */
         .form-group {
             margin-bottom: 25px;
             position: relative;
@@ -236,7 +270,8 @@
             flex: 1;
         }
 
-        button {
+        /* --- PULSANTI --- */
+        button.btn-primary {
             width: 100%;
             padding: 18px;
             margin-top: 15px;
@@ -255,7 +290,7 @@
             overflow: hidden;
         }
 
-        button::before {
+        button.btn-primary::before {
             content: "";
             position: absolute;
             top: 0; left: -100%; width: 50%; height: 100%;
@@ -264,14 +299,38 @@
             transition: 0.5s ease;
         }
 
-        button:hover {
+        button.btn-primary:hover {
             background: #5c6628;
             box-shadow: 0 0 20px var(--neon-glow);
             text-shadow: 0 0 5px rgba(255,255,255,0.5);
         }
 
-        button:hover::before {
+        button.btn-primary:hover::before {
             left: 150%;
+        }
+
+        button.btn-secondary {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            padding: 10px 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            margin-bottom: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button.btn-secondary:hover {
+            border-color: var(--neon-accent);
+            color: var(--neon-accent);
+            background: rgba(163, 204, 41, 0.1);
         }
 
         @media (max-width: 650px) {
@@ -299,109 +358,145 @@
 
 <div class="recruitment-container">
 
-    <div class="header">
-        <h1>OTM ITALIA</h1>
-        <h2>Arma Reforger Tactical Unit</h2>
-        <p>Terminale ufficiale di arruolamento. Inserisci i tuoi dati operativi.</p>
+    <div id="info-section" class="view-section active">
+        <div class="header">
+            <h1>OTM ITALIA</h1>
+            <h2>Arma Reforger Tactical Unit</h2>
+            <p>Benvenuto al terminale di reclutamento. Leggi il briefing prima di procedere.</p>
+        </div>
+
+        <div class="briefing-content">
+            <p><strong>Operatore,</strong><br>
+            La OTM Italia è una Task Force focalizzata sul realismo tattico e sulla simulazione militare (MilSim) su Arma Reforger. Cerchiamo personale motivato, disposto a lavorare in squadra e a seguire una rigorosa catena di comando durante le operazioni.</p>
+        </div>
 
         <div class="info-box">
-            <span><i class="fa-solid fa-calendar-check"></i> Attivi 4–5 giorni a settimana (Missioni & Eventi)</span>
+            <span><i class="fa-solid fa-calendar-check"></i> Attivi 4–5 giorni a settimana (Missioni Ufficiali & Addestramenti)</span>
             <span><i class="fa-solid fa-users-gear"></i> Staff competente e struttura di comando solida</span>
-            <span><i class="fa-solid fa-crosshairs"></i> Gameplay Milsim serio, tattico e realistico</span>
-            <span><i class="fa-solid fa-handshake"></i> Community coesa e in forte espansione</span>
+            <span><i class="fa-solid fa-crosshairs"></i> Gameplay Milsim serio, tattico e immersivo</span>
+            <span><i class="fa-solid fa-microphone"></i> Richiesto microfono funzionante e presenza su Discord</span>
         </div>
+
+        <button class="btn-primary" onclick="toggleView('form-section')">Procedi all'Arruolamento <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></button>
     </div>
 
-    <form action="https://formsubmit.co/otm.armaitalia@gmail.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Nuovo Arruolamento OTM Italia - Arma Reforger">
-        <input type="hidden" name="_template" value="table">
+    <div id="form-section" class="view-section">
+        
+        <button class="btn-secondary" onclick="toggleView('info-section')">
+            <i class="fa-solid fa-angle-left"></i> Torna al Briefing
+        </button>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label>Nome Reale / Nominativo</label>
-                <div class="input-wrapper">
-                    <input name="Nome Reale" type="text" placeholder="Es. Mario Rossi" required>
-                    <i class="fa-solid fa-id-card"></i>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Età (Min 16)</label>
-                <div class="input-wrapper">
-                    <input name="Età" type="number" min="16" placeholder="Es. 22" required>
-                    <i class="fa-solid fa-cake-candles"></i>
-                </div>
-            </div>
+        <div class="header" style="margin-bottom: 20px;">
+            <h2>Modulo Dati Operativi</h2>
+            <p>Compila tutti i campi per trasmettere la tua candidatura all'HQ.</p>
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label>Indirizzo Email</label>
-                <div class="input-wrapper">
-                    <input name="Email" type="email" placeholder="operatore@email.com" required>
-                    <i class="fa-solid fa-envelope"></i>
+        <form action="https://formsubmit.co/otm.armaitalia@gmail.com" method="POST">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Nuovo Arruolamento OTM Italia - Arma Reforger">
+            <input type="hidden" name="_template" value="table">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nome Reale / Nominativo</label>
+                    <div class="input-wrapper">
+                        <input name="Nome Reale" type="text" placeholder="Es. Mario Rossi" required>
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Età (Min 16)</label>
+                    <div class="input-wrapper">
+                        <input name="Età" type="number" min="16" placeholder="Es. 22" required>
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Indirizzo Email</label>
+                    <div class="input-wrapper">
+                        <input name="Email" type="email" placeholder="operatore@email.com" required>
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ID Discord</label>
+                    <div class="input-wrapper">
+                        <input name="Discord" type="text" placeholder="utente#1234 o @utente" required>
+                        <i class="fa-brands fa-discord"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nickname in Game (Arma)</label>
+                    <div class="input-wrapper">
+                        <input name="Nickname" type="text" placeholder="Nome Operatore" required>
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Esperienza MilSim</label>
+                    <div class="input-wrapper select-wrapper">
+                        <select name="Esperienza" required>
+                            <option value="" disabled selected>Seleziona livello...</option>
+                            <option value="Nessuna">Recluta (Nessuna)</option>
+                            <option value="Base">Base (Meno di 100 ore)</option>
+                            <option value="Intermedia">Intermedia (100 - 500 ore)</option>
+                            <option value="Avanzata">Veterano (500+ ore)</option>
+                        </select>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>ID Discord</label>
-                <div class="input-wrapper">
-                    <input name="Discord" type="text" placeholder="utente#1234 o @utente" required>
-                    <i class="fa-brands fa-discord"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>Nickname in Game (Arma)</label>
-                <div class="input-wrapper">
-                    <input name="Nickname" type="text" placeholder="Nome Operatore" required>
-                    <i class="fa-solid fa-gamepad"></i>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Esperienza MilSim</label>
+                <label>Specializzazione Preferita</label>
                 <div class="input-wrapper select-wrapper">
-                    <select name="Esperienza" required>
-                        <option value="" disabled selected>Seleziona livello...</option>
-                        <option value="Nessuna">Recluta (Nessuna)</option>
-                        <option value="Base">Base (Meno di 100 ore)</option>
-                        <option value="Intermedia">Intermedia (100 - 500 ore)</option>
-                        <option value="Avanzata">Veterano (500+ ore)</option>
+                    <select name="Ruolo" required>
+                        <option value="" disabled selected>Assegnazione desiderata...</option>
+                        <option value="Fanteria">Fanteria Leggera / Pesante</option>
+                        <option value="Medico">Medico di Combattimento</option>
+                        <option value="Mitragliere">Mitragliere (LMG/HMG)</option>
+                        <option value="Carrista">Equipaggio Corazzati</option>
+                        <option value="Pilota">Pilota (Ala Fissa / Rotante)</option>
+                        <option value="Cecchino">Tiratore Scelto / Sniper</option>
                     </select>
-                    <i class="fa-solid fa-star-half-stroke"></i>
+                    <i class="fa-solid fa-medal"></i>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Specializzazione Preferita</label>
-            <div class="input-wrapper select-wrapper">
-                <select name="Ruolo" required>
-                    <option value="" disabled selected>Assegnazione desiderata...</option>
-                    <option value="Fanteria">Fanteria Leggera / Pesante</option>
-                    <option value="Medico">Medico di Combattimento</option>
-                    <option value="Mitragliere">Mitragliere (LMG/HMG)</option>
-                    <option value="Carrista">Equipaggio Corazzati</option>
-                    <option value="Pilota">Pilota (Ala Fissa / Rotante)</option>
-                    <option value="Cecchino">Tiratore Scelto / Sniper</option>
-                </select>
-                <i class="fa-solid fa-medal"></i>
+            <div class="form-group">
+                <label>Note aggiuntive / Background</label>
+                <textarea name="Note" placeholder="Eventuali esperienze in altri clan, disponibilità orarie particolari, ecc..."></textarea>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Note aggiuntive / Background</label>
-            <textarea name="Note" placeholder="Eventuali esperienze in altri clan, disponibilità orarie particolari, ecc..."></textarea>
-        </div>
-
-        <button type="submit">Trasmetti Modulo <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i></button>
-    </form>
+            <button type="submit" class="btn-primary">Trasmetti Modulo <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i></button>
+        </form>
+    </div>
 
 </div>
+
+<script>
+    function toggleView(viewId) {
+        // Nascondi tutte le sezioni
+        document.querySelectorAll('.view-section').forEach(function(section) {
+            section.classList.remove('active');
+        });
+        
+        // Mostra solo la sezione richiesta (form o info)
+        document.getElementById(viewId).classList.add('active');
+        
+        // Scorri verso l'alto se necessario quando si cambia pagina
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
 
 </body>
 </html>
