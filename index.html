@@ -21,6 +21,8 @@
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --border-light: rgba(163, 204, 41, 0.2);
+            --discord-color: #5865F2;
+            --discord-hover: #4752C4;
         }
 
         * {
@@ -74,15 +76,15 @@
             border-top: 4px solid var(--neon-accent);
             padding: 45px 40px;
             border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 20px var(--neon-glow);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 25px var(--neon-glow);
             max-width: 700px;
             width: 100%;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             position: relative;
             overflow: hidden;
             z-index: 1;
-            min-height: 500px; /* Evita salti di altezza troppo bruschi */
+            min-height: 500px;
         }
 
         .recruitment-container::before {
@@ -98,14 +100,14 @@
 
         /* --- LOGICA DELLE "PAGINE" --- */
         .view-section {
-            display: none; /* Nascosto di default */
+            display: none;
             animation: fadeIn 0.4s ease-out forwards;
             position: relative;
             z-index: 1;
         }
 
         .view-section.active {
-            display: block; /* Mostra solo la sezione attiva */
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -141,6 +143,7 @@
             color: var(--text-muted);
             font-size: 1em;
             margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         /* --- STILI PER LA SCHERMATA INFO --- */
@@ -333,6 +336,32 @@
             background: rgba(163, 204, 41, 0.1);
         }
 
+        /* --- PULSANTE DISCORD FLUTTUANTE --- */
+        .discord-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background-color: var(--discord-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .discord-float:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.6);
+            background-color: var(--discord-hover);
+        }
+
         @media (max-width: 650px) {
             .form-row {
                 flex-direction: column;
@@ -343,6 +372,14 @@
             }
             .header h1 { font-size: 2.2em; }
             .header h2 { font-size: 1.1em; }
+            
+            .discord-float {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+                font-size: 28px;
+            }
         }
     </style>
 </head>
@@ -355,6 +392,10 @@
 </video>
 
 <div class="video-overlay"></div>
+
+<a href="https://discord.gg/jTRjgk86y5" target="_blank" class="discord-float" title="Unisciti al nostro server Discord">
+    <i class="fa-brands fa-discord"></i>
+</a>
 
 <div class="recruitment-container">
 
